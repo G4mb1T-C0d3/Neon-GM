@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-cyber-bg: #050505;
+  --color-cyber-red: #ff003c;
+  --color-cyber-cyan: #00f3ff;
+  --color-cyber-blue: #00567a;
+  --color-cyber-yellow: #fcee0a;
+  --color-cyber-magenta: #ff00ff;
+}
+
+@layer base {
+  body {
+    @apply bg-cyber-bg text-gray-100 font-sans selection:bg-cyber-red selection:text-white;
+    background-image: 
+      linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
+    background-size: 100% 4px, 100% 100%;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+    z-index: 100;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  body::after {
+    content: "";
+    @apply pointer-events-none fixed inset-0 z-50;
+    background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+  }
+}
+
+@layer components {
+  .cyber-panel {
+    @apply bg-black/60 border-l-2 border-cyber-red backdrop-blur-sm p-4 relative overflow-hidden;
+    box-shadow: -10px 0 20px -10px theme('colors.cyber-red / 30%');
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+  }
+
+  .cyber-panel-cyan {
+    @apply bg-black/60 border-l-2 border-cyber-cyan backdrop-blur-sm p-4 relative overflow-hidden;
+    box-shadow: -10px 0 20px -10px theme('colors.cyber-cyan / 30%');
+    clip-path: polygon(0 20px, 20px 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .cyber-button {
+    @apply px-4 py-2 border-2 border-cyber-cyan text-cyber-cyan font-mono uppercase tracking-widest text-xs transition-all hover:bg-cyber-cyan hover:text-black hover:shadow-[0_0_15px_rgba(0,243,255,0.5)] active:scale-95;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%);
+  }
+
+  .cyber-button-red {
+    @apply px-4 py-2 border-2 border-cyber-red text-cyber-red font-mono uppercase tracking-widest text-xs transition-all hover:bg-cyber-red hover:text-black hover:shadow-[0_0_15px_rgba(255,0,60,0.5)] active:scale-95;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 25%);
+  }
+
+  .cyber-input {
+    @apply bg-transparent border-b-2 border-cyber-blue py-2 px-3 focus:outline-none focus:border-cyber-cyan text-cyber-cyan font-mono transition-colors;
+  }
+
+  .cyber-stat-box {
+    @apply flex flex-col items-center border border-white/10 p-2 min-w-[60px] bg-black/40;
+  }
+
+  .glitch-text {
+    @apply relative inline-block;
+    animation: glitch 3s infinite linear alternate-reverse;
+  }
+
+  .scanline {
+    width: 100%;
+    height: 100px;
+    z-index: 99;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 10s linear infinite;
+  }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0) }
+  2% { transform: translate(-2px, 1px) }
+  4% { transform: translate(-2px, -1px) }
+  6% { transform: translate(2px, 1px) }
+  8% { transform: translate(2px, -1px) }
+  10% { transform: translate(0) }
+  100% { transform: translate(0) }
+}
+
+@keyframes scanline {
+  0% { bottom: 100%; }
+  80% { bottom: 100%; }
+  100% { bottom: -100px; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url('https://media.giphy.com/media/oEI9uWUicKgRchAOrE/giphy.gif');
+}
+
